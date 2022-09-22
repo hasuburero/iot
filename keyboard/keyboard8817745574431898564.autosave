@@ -1,0 +1,15 @@
+String str = "Hello world!!";
+
+void setup()
+{
+	size(300, 300);
+	background(0);
+
+	str = str.substring(0, str.length()-1);
+
+	text(str, 0, 0);
+}
+
+void draw()
+{
+}

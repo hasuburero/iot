@@ -1,0 +1,35 @@
+import processing.net.*;
+
+boolean myServerRunning = true;
+Server myServer;
+
+void setup(){
+	size(400, 400);
+	background(0);
+	myServer = new Server(this, 5204);
+	println(Server.ip());
+}
+
+void mousePressed()
+{
+	myServer.stop();
+	myServerRunning = false;
+}
+
+void draw()
+{
+	if(myServerRunning == true){
+		text("server", 15, 45);
+		Client thisClient = myServer.available();
+		if(thisClient != null){
+			if(thisClient.available() > 0){
+				//thisClient.write("ABC\r\n");
+				println("message from: " + thisClient.ip() + " : " + thisClient.readString());
+			}
+		}
+	}
+	else{
+		text("server", 15, 45);
+		text("stopped", 15, 65);
+	}
+}

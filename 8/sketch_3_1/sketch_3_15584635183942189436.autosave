@@ -1,0 +1,61 @@
+import processing.serial.*;
+import cc.arduino.*;
+
+Arduino arduino;
+int input0=0;
+int input1=1;
+float velocity = 0;
+float angle = 0;
+float g = 9.8;
+
+void setup(){
+	size(1200, 900);
+	arduino = new Arduino(this, "COM3", 57600);
+	arduino.pinMode(input0, Arduino.INPUT);
+	arduino.pinMode(input1, Arduino.INPUT);
+	frameRate(60);
+}
+
+void draw(){
+	println("test");
+	background(0);
+	fill(255);
+	int analog0 = arduino.analogRead(input0);
+	int analog1 = arduino.analogRead(input1);
+	float x = 10;
+	float y = height-10;
+
+	velocity = map(analog0, 0, 1024, 0, 300);
+	angle = map(analog1, 0, 1024, 0, (float)Math.PI*2);
+
+	text("angle = " + angle, 10, 10);
+	text("velocity = " + velocity, 10, 20);
+
+	float velocityx = velocity*(float)Math.cos(angle);
+	float velocityy = -velocity*(float)Math.sin(angle); 
+	ellipse(x, y, 20, 20);
+
+	while(velocityy!=0){
+		x += velocityx*0.1;
+		y += velocityy*0.1+g*0.01/2;
+		velocityy = velocityy + g*0.1;
+		if(x>width-1-10){
+			velocityx = -velocityx;
+			x = width-10;
+		}
+		else if(x<10){
+			velocityx = -velocityx;
+			x = 10;
+		}
+		if(y>height-1-10){
+			velocityy = -velocityy;
+			y = height-10;
+		}
+		else if(y<10){
+			velocityy = -velocityy;
+			y = 10;
+		}
+		ellipse(x, y, 20, 20);
+		println("ellipse");
+	}
+}

@@ -1,0 +1,32 @@
+import processing.serial.*;
+import cc.arduino.*;
+
+Arduino arduino;
+int input0 = 0;
+int velocityX;
+float x;
+
+void setup(){
+  size(640, 480);
+  arduino = new Arduino(this, "COM3", 57600);
+  arduino.pinMode(input0, Arduino.INPUT);
+  frameRate(60);
+}
+
+void draw(){
+  background(0);
+  fill(255);
+  int analog0 = arduino.analogRead(input0);
+  print(analog0);
+  text("input0 = " + analog0, 10, 20);
+  float velocityX = map(analog0, 0, 1024, 0, 30);
+  x += velocityX-15;
+  if(x<10){
+    x=10;
+  }
+  else if(x>width-1-10){
+    x=width-1-10;
+  }
+  fill(255, 255, 50);
+  ellipse(x, height/2, 20, 20);
+}
