@@ -7,12 +7,12 @@ Server myServer;
 
 String s;
 String str[];
-String filename = "data.csv";
+String filename = "data1.csv";
 
 void setup(){
   size(400, 400);
 	background(0);
-	myServer = new Server(this, 5204);
+	myServer = new Server(this, 8080);
 	println(Server.ip());
 	
   println("new file");
@@ -38,16 +38,16 @@ void draw()
           remake();
         }
         else if(str.length == 3){
-          s = String.valueOf(0.81*float(str[1])+float(str[2])*0.01*(0.99*float(str[1])-14.3)+46.3);
-				  output.print(getTime() + ",");
-				  output.print(str[0] + ",");
-				  output.print(str[1] + ",");
-          output.print(str[2] + ",");
-          output.println(s);
-				  print(getTime() + ",");
-				  print(str[0] + ",");
-				  print(str[1] + ",");
-				  println(str[2] + ",");
+			s = String.valueOf(0.81*float(str[1])+float(str[2])*0.01*(0.99*float(str[1])-14.3)+46.3);
+			output.print(getTime() + ",");
+			output.print(str[0] + ",");
+			output.print(str[1] + ",");
+			output.print(str[2] + ",");
+			output.println(s);
+			print(getTime() + ",");
+			print(str[0] + ",");
+			print(str[1] + ",");
+			println(str[2] + ",");
 				}
 			}
 		}
